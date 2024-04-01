@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>AirCloud 日常</title>
+  <icon>https://www.gravatar.com/avatar/55d862be86e0282ecc4a94bc541480b5</icon>
+  <subtitle>sometimes code, sometimes design</subtitle>
+  <link href="http://niexiaotao.cn/atom.xml" rel="self"/>
+  
+  <link href="http://niexiaotao.cn/"/>
+  <updated>2024-04-01T12:04:04.411Z</updated>
+  <id>http://niexiaotao.cn/</id>
+  
+  <author>
+    <name>Lay</name>
+    <email>leibo_hit@outlook.com</email>
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HELLO BLOG</title>
+    <link href="http://niexiaotao.cn/2024/04/01/hello_blog/"/>
+    <id>http://niexiaotao.cn/2024/04/01/hello_blog/</id>
+    <published>2024-04-01T12:03:15.000Z</published>
+    <updated>2024-04-01T12:04:04.411Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hello blog</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Hello blog&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+    <category term="test" scheme="http://niexiaotao.cn/tags/test/"/>
+    
+  </entry>
+  
+</feed>
