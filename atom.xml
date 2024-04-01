@@ -3,11 +3,11 @@
   <title>Lay&#39;s blog</title>
   <icon>https://www.gravatar.com/avatar/55d862be86e0282ecc4a94bc541480b5</icon>
   <subtitle>sometimes code, sometimes design</subtitle>
-  <link href="http://niexiaotao.cn/atom.xml" rel="self"/>
+  <link href="https://laylow13.github.io/atom.xml" rel="self"/>
   
-  <link href="http://niexiaotao.cn/"/>
-  <updated>2024-04-01T12:04:04.411Z</updated>
-  <id>http://niexiaotao.cn/</id>
+  <link href="https://laylow13.github.io/"/>
+  <updated>2024-04-01T12:27:19.098Z</updated>
+  <id>https://laylow13.github.io/</id>
   
   <author>
     <name>Lay</name>
@@ -18,24 +18,25 @@
   
   <entry>
     <title>HELLO BLOG</title>
-    <link href="http://niexiaotao.cn/2024/04/01/hello_blog/"/>
-    <id>http://niexiaotao.cn/2024/04/01/hello_blog/</id>
+    <link href="https://laylow13.github.io/2024/04/01/hello_blog/"/>
+    <id>https://laylow13.github.io/2024/04/01/hello_blog/</id>
     <published>2024-04-01T12:03:15.000Z</published>
-    <updated>2024-04-01T12:04:04.411Z</updated>
+    <updated>2024-04-01T12:27:19.098Z</updated>
     
-    <content type="html"><![CDATA[<p>Hello blog</p>]]></content>
+    <content type="html"><![CDATA[<p>Hello blog</p><p>inline equation$y=x^2$</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::cout&lt;&lt;<span class="string">&quot;hello world&quot;</span>&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>]]></content>
     
     
       
       
     <summary type="html">&lt;p&gt;Hello blog&lt;/p&gt;
-</summary>
+&lt;p&gt;inline equation$y=x^2$&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;</summary>
       
     
     
     
     
-    <category term="test" scheme="http://niexiaotao.cn/tags/test/"/>
+    <category term="test" scheme="https://laylow13.github.io/tags/test/"/>
     
   </entry>
   
