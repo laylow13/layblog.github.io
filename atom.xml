@@ -6,7 +6,7 @@
   <link href="https://laylow13.github.io/atom.xml" rel="self"/>
   
   <link href="https://laylow13.github.io/"/>
-  <updated>2024-05-10T08:58:10.757Z</updated>
+  <updated>2024-05-10T09:00:02.461Z</updated>
   <id>https://laylow13.github.io/</id>
   
   <author>
@@ -21,17 +21,17 @@
     <link href="https://laylow13.github.io/2024/05/10/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93%E4%B8%89/"/>
     <id>https://laylow13.github.io/2024/05/10/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93%E4%B8%89/</id>
     <published>2024-05-10T08:30:13.000Z</published>
-    <updated>2024-05-10T08:58:10.757Z</updated>
+    <updated>2024-05-10T09:00:02.461Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="风格迁移">风格迁移</h3><p><img src="../img/course3_style.png" alt="alt text"> #### 1.基本概念和方法： -<strong>输入图像</strong>：风格迁移技术使用两张输入图像，一张是内容图像，另一张是风格图像。-<strong>网络选择</strong>：使用预训练的卷积神经网络（如VGG-19），并利用其深层网络结构来抽取内容和风格的特征。-<strong>特征提取</strong>：选择网络中不同深度的层作为内容层和风格层。通常，内容特征取自较深的网络层，而风格特征取自多个层。</p><h4 id="核心步骤">2. 核心步骤：</h4><ul><li><strong>初始化和迭代</strong>：风格迁移过程中，合成图像是通过迭代优化得到的，通常初始化为内容图像。</li><li><strong>损失函数</strong>：整个风格迁移的核心是定义并优化一个损失函数，该函数包括内容损失、风格损失和总变差损失：<ul><li><strong>内容损失</strong>：确保合成图像在内容上与内容图像相似。</li><li><strong>风格损失</strong>：使用格拉姆矩阵来计算合成图像与风格图像在风格上的相似度。</li><li><strong>总变差损失</strong>：有助于降低图像噪声，使相邻像素之间的色彩过渡更加平滑。</li></ul></li></ul><h4 id="训练过程">3. 训练过程：</h4><ul><li><strong>特征抽取</strong>：对合成图像、内容图像和风格图像执行前向传播，抽取必要的内容和风格特征。</li><li><strong>损失计算</strong>：在每次迭代中，计算损失函数，并通过反向传播更新合成图像，以减小损失。</li></ul><h3 id="fcn与语义分割">FCN与语义分割</h3><h4 id="fcn的基本概念和结构">FCN的基本概念和结构：</h4><ol type="1"><li><strong>网络架构</strong>：<ul><li><strong>全卷积</strong>：传统的卷积神经网络（CNN）包含全连接层，用于分类任务。FCN将这些全连接层转换成卷积层，使网络能够接受任意大小的输入。</li><li><strong>上采样和反卷积</strong>：FCN通过使用反卷积（也称为转置卷积）层进行上采样，恢复输入图像的尺寸，使输出的空间维度与输入相同。这是为了生成与原始输入图像相同大小的分割图。</li></ul></li><li><strong>端到端训练</strong>：<ul><li>FCN可以端到端地训练，直接从图像像素到像素级的类别标签。</li></ul></li><li><strong>跳跃连接</strong>：<ul><li>FCN利用深层网络中的跳跃连接结合不同层级的特征图。这允许网络在上采样过程中结合低层次（精细的细节）和高层次（语义信息）的特征。</li></ul></li></ol><h4 id="fcn的工作流程">FCN的工作流程：</h4><ol type="1"><li><strong>特征提取</strong>：<ul><li>输入图像首先通过一系列卷积层和池化层，这些层逐步降低图像的空间尺寸，同时增加通道数，提取出图像的高级语义特征。</li></ul></li><li><strong>上采样和特征融合</strong>：<ul><li>使用转置卷积层对提取的特征图进行上采样，逐步恢复到原始输入图像的尺寸。</li><li>结合不同层的特征（通过跳跃连接），以提高上采样过程中的精确度和语义清晰度。</li></ul></li><li><strong>分类</strong>：<ul><li>最后一层是一个卷积层，它将特征图转换为类别分数图，每个像素的深度等于类别数。每个位置的类别分数表示该像素属于每个类别的概率。</li></ul></li><li><strong>学习和优化</strong>：<ul><li>通过最小化像素级的交叉熵损失函数来训练网络，这个损失函数衡量的是预测的类别分数图和真实的标注图之间的差异。</li></ul></li></ol>]]></content>
+    <content type="html"><![CDATA[<h3 id="风格迁移">风格迁移</h3><p><img src="/img/course3_style.png" alt="alt text"> #### 1.基本概念和方法： -<strong>输入图像</strong>：风格迁移技术使用两张输入图像，一张是内容图像，另一张是风格图像。-<strong>网络选择</strong>：使用预训练的卷积神经网络（如VGG-19），并利用其深层网络结构来抽取内容和风格的特征。-<strong>特征提取</strong>：选择网络中不同深度的层作为内容层和风格层。通常，内容特征取自较深的网络层，而风格特征取自多个层。</p><h4 id="核心步骤">2. 核心步骤：</h4><ul><li><strong>初始化和迭代</strong>：风格迁移过程中，合成图像是通过迭代优化得到的，通常初始化为内容图像。</li><li><strong>损失函数</strong>：整个风格迁移的核心是定义并优化一个损失函数，该函数包括内容损失、风格损失和总变差损失：<ul><li><strong>内容损失</strong>：确保合成图像在内容上与内容图像相似。</li><li><strong>风格损失</strong>：使用格拉姆矩阵来计算合成图像与风格图像在风格上的相似度。</li><li><strong>总变差损失</strong>：有助于降低图像噪声，使相邻像素之间的色彩过渡更加平滑。</li></ul></li></ul><h4 id="训练过程">3. 训练过程：</h4><ul><li><strong>特征抽取</strong>：对合成图像、内容图像和风格图像执行前向传播，抽取必要的内容和风格特征。</li><li><strong>损失计算</strong>：在每次迭代中，计算损失函数，并通过反向传播更新合成图像，以减小损失。</li></ul><h3 id="fcn与语义分割">FCN与语义分割</h3><h4 id="fcn的基本概念和结构">FCN的基本概念和结构：</h4><ol type="1"><li><strong>网络架构</strong>：<ul><li><strong>全卷积</strong>：传统的卷积神经网络（CNN）包含全连接层，用于分类任务。FCN将这些全连接层转换成卷积层，使网络能够接受任意大小的输入。</li><li><strong>上采样和反卷积</strong>：FCN通过使用反卷积（也称为转置卷积）层进行上采样，恢复输入图像的尺寸，使输出的空间维度与输入相同。这是为了生成与原始输入图像相同大小的分割图。</li></ul></li><li><strong>端到端训练</strong>：<ul><li>FCN可以端到端地训练，直接从图像像素到像素级的类别标签。</li></ul></li><li><strong>跳跃连接</strong>：<ul><li>FCN利用深层网络中的跳跃连接结合不同层级的特征图。这允许网络在上采样过程中结合低层次（精细的细节）和高层次（语义信息）的特征。</li></ul></li></ol><h4 id="fcn的工作流程">FCN的工作流程：</h4><ol type="1"><li><strong>特征提取</strong>：<ul><li>输入图像首先通过一系列卷积层和池化层，这些层逐步降低图像的空间尺寸，同时增加通道数，提取出图像的高级语义特征。</li></ul></li><li><strong>上采样和特征融合</strong>：<ul><li>使用转置卷积层对提取的特征图进行上采样，逐步恢复到原始输入图像的尺寸。</li><li>结合不同层的特征（通过跳跃连接），以提高上采样过程中的精确度和语义清晰度。</li></ul></li><li><strong>分类</strong>：<ul><li>最后一层是一个卷积层，它将特征图转换为类别分数图，每个像素的深度等于类别数。每个位置的类别分数表示该像素属于每个类别的概率。</li></ul></li><li><strong>学习和优化</strong>：<ul><li>通过最小化像素级的交叉熵损失函数来训练网络，这个损失函数衡量的是预测的类别分数图和真实的标注图之间的差异。</li></ul></li></ol>]]></content>
     
     
       
       
     <summary type="html">&lt;h3 id=&quot;风格迁移&quot;&gt;风格迁移&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;../img/course3_style.png&quot; alt=&quot;alt text&quot;&gt; #### 1.
+&lt;p&gt;&lt;img src=&quot;/img/course3_style.png&quot; alt=&quot;alt text&quot;&gt; #### 1.
 基本概念和方法： -
-&lt;strong&gt;输入图像&lt;/strong&gt;：风格迁移技术使用两张输入图像，一张</summary>
+&lt;strong&gt;输入图像&lt;/strong&gt;：风格迁移技术使用两张输入图像，一张是内</summary>
       
     
     
