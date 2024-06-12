@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:description" content="Lay&#39;s blog">
+    <meta property="og:type" content="website">
+    <meta name="description" content="Lay&#39;s blog">
+    <meta name="keyword"  content="笔记,日常">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        PX4 Control allocation - Lay&#39;s blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/aircloud.css">
+
+    
+<link rel="stylesheet" href="/css/gitment.css">
+
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_28hi1hpxx24.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="Lay's blog" type="application/atom+xml">
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> sometimes code, sometimes design </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.png" />
+        </div>
+        <div class="name">
+            <i>Lay</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archive">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/collect/">
+                    <i class="iconfont icon-shoucang1"></i>
+                    <span>收藏</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#iris-motor-model"><span class="toc-text">iris motor model</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#x500-motor-model"><span class="toc-text">x500 motor model</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#px4-default"><span class="toc-text">PX4 default</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#px4-normalized-thrust"><span class="toc-text">PX4 normalized thrust</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-bg" id="search-bg"></div>
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> sometimes code, sometimes design </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        PX4 Control allocation
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2024-06-12 18:52:51</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#PX4 无人机" title="PX4 无人机">PX4 无人机</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content no-indent">
+        <p><a target="_blank" rel="noopener" href="https://github.com/PX4/PX4-Autopilot/blob/main/src/modules/control_allocator/module.yaml">PX4-Autopilot/src/modules/control_allocator/module.yaml
+at main · PX4/PX4-Autopilot · GitHub</a></p>
+<p>`# (MC) Rotors</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">CA_ROTOR_COUNT:</span></span><br><span class="line">    <span class="attr">description:</span></span><br><span class="line">        <span class="attr">short:</span> <span class="string">Total</span> <span class="string">number</span> <span class="string">of</span> <span class="string">rotors</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">enum</span></span><br><span class="line">    <span class="attr">values:</span></span><br><span class="line">        <span class="attr">0:</span> <span class="string">'0'</span></span><br><span class="line">        <span class="attr">1:</span> <span class="string">'1'</span></span><br><span class="line">        <span class="attr">2:</span> <span class="string">'2'</span></span><br><span class="line">        <span class="attr">3:</span> <span class="string">'3'</span></span><br><span class="line">        <span class="attr">4:</span> <span class="string">'4'</span></span><br><span class="line">        <span class="attr">5:</span> <span class="string">'5'</span></span><br><span class="line">        <span class="attr">6:</span> <span class="string">'6'</span></span><br><span class="line">        <span class="attr">7:</span> <span class="string">'7'</span></span><br><span class="line">        <span class="attr">8:</span> <span class="string">'8'</span></span><br><span class="line">        <span class="attr">9:</span> <span class="string">'9'</span></span><br><span class="line">        <span class="attr">10:</span> <span class="string">'10'</span></span><br><span class="line">        <span class="attr">11:</span> <span class="string">'11'</span></span><br><span class="line">        <span class="attr">12:</span> <span class="string">'12'</span></span><br><span class="line">    <span class="attr">default:</span> <span class="number">0</span></span><br><span class="line"><span class="string">CA_ROTOR${i}_PX:</span></span><br><span class="line">    <span class="attr">description:</span></span><br><span class="line">        <span class="attr">short:</span> <span class="string">Position</span> <span class="string">of</span> <span class="string">rotor</span> <span class="string">${i}</span> <span class="string">along</span> <span class="string">X</span> <span class="string">body</span> <span class="string">axis</span> <span class="string">relative</span> <span class="string">to</span> <span class="string">center</span> <span class="string">of</span> <span class="string">gravity</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">float</span></span><br><span class="line">    <span class="attr">decimal:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">increment:</span> <span class="number">0.1</span></span><br><span class="line">    <span class="attr">unit:</span> <span class="string">m</span></span><br><span class="line">    <span class="attr">num_instances:</span> <span class="meta">*max_num_mc_motors</span></span><br><span class="line">    <span class="attr">min:</span> <span class="number">-100</span></span><br><span class="line">    <span class="attr">max:</span> <span class="number">100</span></span><br><span class="line">    <span class="attr">default:</span> <span class="number">0.0</span></span><br><span class="line"><span class="string">CA_ROTOR${i}_PY:</span></span><br><span class="line">    <span class="attr">description:</span></span><br><span class="line">        <span class="attr">short:</span> <span class="string">Position</span> <span class="string">of</span> <span class="string">rotor</span> <span class="string">${i}</span> <span class="string">along</span> <span class="string">Y</span> <span class="string">body</span> <span class="string">axis</span> <span class="string">relative</span> <span class="string">to</span> <span class="string">center</span> <span class="string">of</span> <span class="string">gravity</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">float</span></span><br><span class="line">    <span class="attr">decimal:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">increment:</span> <span class="number">0.1</span></span><br><span class="line">    <span class="attr">unit:</span> <span class="string">m</span></span><br><span class="line">    <span class="attr">num_instances:</span> <span class="meta">*max_num_mc_motors</span></span><br><span class="line">    <span class="attr">min:</span> <span class="number">-100</span></span><br><span class="line">    <span class="attr">max:</span> <span class="number">100</span></span><br><span class="line">    <span class="attr">default:</span> <span class="number">0.0</span></span><br><span class="line"><span class="string">CA_ROTOR${i}_PZ:</span></span><br><span class="line">    <span class="attr">description:</span></span><br><span class="line">        <span class="attr">short:</span> <span class="string">Position</span> <span class="string">of</span> <span class="string">rotor</span> <span class="string">${i}</span> <span class="string">along</span> <span class="string">Z</span> <span class="string">body</span> <span class="string">axis</span> <span class="string">relative</span> <span class="string">to</span> <span class="string">center</span> <span class="string">of</span> <span class="string">gravity</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">float</span></span><br><span class="line">    <span class="attr">decimal:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">increment:</span> <span class="number">0.1</span></span><br><span class="line">    <span class="attr">unit:</span> <span class="string">m</span></span><br><span class="line">    <span class="attr">num_instances:</span> <span class="meta">*max_num_mc_motors</span></span><br><span class="line">    <span class="attr">min:</span> <span class="number">-100</span></span><br><span class="line">    <span class="attr">max:</span> <span class="number">100</span></span><br><span class="line">    <span class="attr">default:</span> <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line"><span class="string">CA_ROTOR${i}_AX:</span></span><br><span class="line">    <span class="attr">description:</span></span><br><span class="line">        <span class="attr">short:</span> <span class="string">Axis</span> <span class="string">of</span> <span class="string">rotor</span> <span class="string">${i}</span> <span class="string">thrust</span> <span class="string">vector,</span> <span class="string">X</span> <span class="string">body</span> <span class="string">axis</span> <span class="string">component</span></span><br><span class="line">        <span class="attr">long:</span> <span class="string">Only</span> <span class="string">the</span> <span class="string">direction</span> <span class="string">is</span> <span class="string">considered</span> <span class="string">(the</span> <span class="string">vector</span> <span class="string">is</span> <span class="string">normalized).</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">float</span></span><br><span class="line">    <span class="attr">decimal:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">increment:</span> <span class="number">0.1</span></span><br><span class="line">    <span class="attr">num_instances:</span> <span class="meta">*max_num_mc_motors</span></span><br><span class="line">    <span class="attr">min:</span> <span class="number">-100</span></span><br><span class="line">    <span class="attr">max:</span> <span class="number">100</span></span><br><span class="line">    <span class="attr">default:</span> <span class="number">0.0</span></span><br><span class="line"><span class="string">CA_ROTOR${i}_AY:</span></span><br><span class="line">    <span class="attr">description:</span></span><br><span class="line">        <span class="attr">short:</span> <span class="string">Axis</span> <span class="string">of</span> <span class="string">rotor</span> <span class="string">${i}</span> <span class="string">thrust</span> <span class="string">vector,</span> <span class="string">Y</span> <span class="string">body</span> <span class="string">axis</span> <span class="string">component</span></span><br><span class="line">        <span class="attr">long:</span> <span class="string">Only</span> <span class="string">the</span> <span class="string">direction</span> <span class="string">is</span> <span class="string">considered</span> <span class="string">(the</span> <span class="string">vector</span> <span class="string">is</span> <span class="string">normalized).</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">float</span></span><br><span class="line">    <span class="attr">decimal:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">increment:</span> <span class="number">0.1</span></span><br><span class="line">    <span class="attr">num_instances:</span> <span class="meta">*max_num_mc_motors</span></span><br><span class="line">    <span class="attr">min:</span> <span class="number">-100</span></span><br><span class="line">    <span class="attr">max:</span> <span class="number">100</span></span><br><span class="line">    <span class="attr">default:</span> <span class="number">0.0</span></span><br><span class="line"><span class="string">CA_ROTOR${i}_AZ:</span></span><br><span class="line">    <span class="attr">description:</span></span><br><span class="line">        <span class="attr">short:</span> <span class="string">Axis</span> <span class="string">of</span> <span class="string">rotor</span> <span class="string">${i}</span> <span class="string">thrust</span> <span class="string">vector,</span> <span class="string">Z</span> <span class="string">body</span> <span class="string">axis</span> <span class="string">component</span></span><br><span class="line">        <span class="attr">long:</span> <span class="string">Only</span> <span class="string">the</span> <span class="string">direction</span> <span class="string">is</span> <span class="string">considered</span> <span class="string">(the</span> <span class="string">vector</span> <span class="string">is</span> <span class="string">normalized).</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">float</span></span><br><span class="line">    <span class="attr">decimal:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">increment:</span> <span class="number">0.1</span></span><br><span class="line">    <span class="attr">num_instances:</span> <span class="meta">*max_num_mc_motors</span></span><br><span class="line">    <span class="attr">min:</span> <span class="number">-100</span></span><br><span class="line">    <span class="attr">max:</span> <span class="number">100</span></span><br><span class="line">    <span class="attr">default:</span> <span class="number">-1.0</span></span><br><span class="line"></span><br><span class="line"><span class="string">CA_ROTOR${i}_CT:</span></span><br><span class="line">    <span class="attr">description:</span></span><br><span class="line">        <span class="attr">short:</span> <span class="string">Thrust</span> <span class="string">coefficient</span> <span class="string">of</span> <span class="string">rotor</span> <span class="string">${i}</span></span><br><span class="line">        <span class="attr">long:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          The thrust coefficient if defined as Thrust = CT * u^2,</span></span><br><span class="line"><span class="string">          where u (with value between actuator minimum and maximum)</span></span><br><span class="line"><span class="string">          is the output signal sent to the motor controller.</span></span><br><span class="line"><span class="string"></span>    <span class="attr">type:</span> <span class="string">float</span></span><br><span class="line">    <span class="attr">decimal:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">increment:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">num_instances:</span> <span class="meta">*max_num_mc_motors</span></span><br><span class="line">    <span class="attr">min:</span> <span class="number">0</span></span><br><span class="line">    <span class="attr">max:</span> <span class="number">100</span></span><br><span class="line">    <span class="attr">default:</span> <span class="number">6.5</span></span><br><span class="line"></span><br><span class="line"><span class="string">CA_ROTOR${i}_KM:</span></span><br><span class="line">    <span class="attr">description:</span></span><br><span class="line">        <span class="attr">short:</span> <span class="string">Moment</span> <span class="string">coefficient</span> <span class="string">of</span> <span class="string">rotor</span> <span class="string">${i}</span></span><br><span class="line">        <span class="attr">long:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          The moment coefficient if defined as Torque = KM * Thrust.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">          <span class="string">Use</span> <span class="string">a</span> <span class="string">positive</span> <span class="string">value</span> <span class="string">for</span> <span class="string">a</span> <span class="string">rotor</span> <span class="string">with</span> <span class="string">CCW</span> <span class="string">rotation.</span></span><br><span class="line">          <span class="string">Use</span> <span class="string">a</span> <span class="string">negative</span> <span class="string">value</span> <span class="string">for</span> <span class="string">a</span> <span class="string">rotor</span> <span class="string">with</span> <span class="string">CW</span> <span class="string">rotation.</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">float</span></span><br><span class="line">    <span class="attr">decimal:</span> <span class="number">3</span></span><br><span class="line">    <span class="attr">increment:</span> <span class="number">0.01</span></span><br><span class="line">    <span class="attr">num_instances:</span> <span class="meta">*max_num_mc_motors</span></span><br><span class="line">    <span class="attr">min:</span> <span class="number">-1</span></span><br><span class="line">    <span class="attr">max:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">default:</span> <span class="number">0.05</span><span class="string">`</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://docs.px4.io/main/assets/control_allocation_pipeline.JjsICZzU.png" title="" alt="" width="737"></p>
+<h5 id="iris-motor-model">iris motor model</h5>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">'front_right_motor_model'</span> <span class="attr">filename</span>=<span class="string">'libgazebo_motor_model.so'</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">robotNamespace</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">jointName</span>&gt;</span>rotor_0_joint<span class="tag">&lt;/<span class="name">jointName</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">linkName</span>&gt;</span>rotor_0<span class="tag">&lt;/<span class="name">linkName</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">turningDirection</span>&gt;</span>ccw<span class="tag">&lt;/<span class="name">turningDirection</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">timeConstantUp</span>&gt;</span>0.0125<span class="tag">&lt;/<span class="name">timeConstantUp</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">timeConstantDown</span>&gt;</span>0.025<span class="tag">&lt;/<span class="name">timeConstantDown</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">maxRotVelocity</span>&gt;</span>1100<span class="tag">&lt;/<span class="name">maxRotVelocity</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">motorConstant</span>&gt;</span>5.84e-06<span class="tag">&lt;/<span class="name">motorConstant</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">momentConstant</span>&gt;</span>0.06<span class="tag">&lt;/<span class="name">momentConstant</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">commandSubTopic</span>&gt;</span>/gazebo/command/motor_speed<span class="tag">&lt;/<span class="name">commandSubTopic</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">motorNumber</span>&gt;</span>0<span class="tag">&lt;/<span class="name">motorNumber</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rotorDragCoefficient</span>&gt;</span>0.000175<span class="tag">&lt;/<span class="name">rotorDragCoefficient</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rollingMomentCoefficient</span>&gt;</span>1e-06<span class="tag">&lt;/<span class="name">rollingMomentCoefficient</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">motorSpeedPubTopic</span>&gt;</span>/motor_speed/0<span class="tag">&lt;/<span class="name">motorSpeedPubTopic</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rotorVelocitySlowdownSim</span>&gt;</span>10<span class="tag">&lt;/<span class="name">rotorVelocitySlowdownSim</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="x500-motor-model">x500 motor model</h5>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span> <span class="attr">filename</span>=<span class="string">"gz-sim-multicopter-motor-model-system"</span> <span class="attr">name</span>=<span class="string">"gz::sim::systems::MulticopterMotorModel"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">jointName</span>&gt;</span>rotor_0_joint<span class="tag">&lt;/<span class="name">jointName</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">linkName</span>&gt;</span>rotor_0<span class="tag">&lt;/<span class="name">linkName</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">turningDirection</span>&gt;</span>ccw<span class="tag">&lt;/<span class="name">turningDirection</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">timeConstantUp</span>&gt;</span>0.0125<span class="tag">&lt;/<span class="name">timeConstantUp</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">timeConstantDown</span>&gt;</span>0.025<span class="tag">&lt;/<span class="name">timeConstantDown</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">maxRotVelocity</span>&gt;</span>1000.0<span class="tag">&lt;/<span class="name">maxRotVelocity</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">motorConstant</span>&gt;</span>8.54858e-06<span class="tag">&lt;/<span class="name">motorConstant</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">momentConstant</span>&gt;</span>0.016<span class="tag">&lt;/<span class="name">momentConstant</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">commandSubTopic</span>&gt;</span>command/motor_speed<span class="tag">&lt;/<span class="name">commandSubTopic</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">motorNumber</span>&gt;</span>0<span class="tag">&lt;/<span class="name">motorNumber</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rotorDragCoefficient</span>&gt;</span>8.06428e-05<span class="tag">&lt;/<span class="name">rotorDragCoefficient</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rollingMomentCoefficient</span>&gt;</span>1e-06<span class="tag">&lt;/<span class="name">rollingMomentCoefficient</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rotorVelocitySlowdownSim</span>&gt;</span>10<span class="tag">&lt;/<span class="name">rotorVelocitySlowdownSim</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">motorType</span>&gt;</span>velocity<span class="tag">&lt;/<span class="name">motorType</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="px4-default">PX4 default</h5>
+<p>CT :6.5</p>
+<p>KM:0.050</p>
+<h5 id="px4-normalized-thrust">PX4 normalized thrust</h5>
+<p><a target="_blank" rel="noopener" href="https://discuss.px4.io/t/about-normalized-torque-and-thrust-in-offboard-control-mode-ros2-sitl/36265/2">About
+normalized torque and thrust in offboard control mode (ROS2 SITL) - #2
+by ChanJoon - Multicopter 🛸 - Discussion Forum for PX4, Pixhawk,
+QGroundControl, MAVSDK, MAVLink</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">thrust_normalized =</span><br><span class="line">(sqrt(thrust/motor_constant)-min_motor_vel)/(max_motor_vel-min_motor_vel)</span><br></pre></td></tr></table></figure>
+<p>which means that the ‘thrust’ setpoint is actually the same with the
+motor output, it is the normalized motor velocity.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/PX4/PX4-user_guide/blob/main/en/config_mc/pid_tuning_guide_multicopter.md">PX4-user_guide/en/config_mc/pid_tuning_guide_multicopter.md
+at main · PX4/PX4-user_guide · GitHub</a></p>
+<p><a target="_blank" rel="noopener" href="https://tlab-uav.github.io/tech-details/docs/hardware/px4-firmware/px4-dynamic-control-allocation/">new
+control allocator scheme?</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/PX4/PX4-Autopilot/issues/19444">[Project
+Tracker] Control Allocation User experience improvement · Issue #19444 ·
+PX4/PX4-Autopilot · GitHub</a></p>
+<p>https://github.com/PX4/PX4-Autopilot/pull/18368</p>
+<p><a target="_blank" rel="noopener" href="https://discuss.px4.io/t/control-allocation-roll-pitch-torque-effectiveness-actual-meaning/37070/4">Control
+allocation roll/pitch torque effectiveness actual meaning - #4 by
+hhenryy - Control 🕹 - Discussion Forum for PX4, Pixhawk, QGroundControl,
+MAVSDK, MAVLink</a></p>
+
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+        <div id="lv-container"></div>
+        <div class="giscus"></div>
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>  Theme <a target="_blank" rel="noopener" href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="/js/index.js"></script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    <script src="https://giscus.app/client.js"
+  data-repo="laylow13/laylow13.github.io"
+  data-repo-id="R_kgDOHcPGig"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOHcPGis4CeYCu"
+  data-mapping="title"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="light"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+
+
+
+
+</html>
