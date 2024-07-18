@@ -214,7 +214,7 @@ mjx-container[display="true"] + br {
     </div>
     
         <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A3%8E%E6%A0%BC%E8%BF%81%E7%A7%BB"><span class="toc-text">风格迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E6%96%B9%E6%B3%95"><span class="toc-text">1. 基本概念和方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%AD%A5%E9%AA%A4"><span class="toc-text">2. 核心步骤：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B"><span class="toc-text">3. 训练过程：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fcn%E4%B8%8E%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2"><span class="toc-text">FCN与语义分割</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#fcn%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E7%BB%93%E6%9E%84"><span class="toc-text">FCN的基本概念和结构：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fcn%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">FCN的工作流程：</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A3%8E%E6%A0%BC%E8%BF%81%E7%A7%BB"><span class="toc-text">风格迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-text">1. 基本概念和方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="toc-text">2. 核心步骤：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="toc-text">3. 训练过程：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FCN%E4%B8%8E%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2"><span class="toc-text">FCN与语义分割</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FCN%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="toc-text">FCN的基本概念和结构：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FCN%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="toc-text">FCN的工作流程：</span></a></li></ol></li></ol>
 </div>
     
 </div>
@@ -264,68 +264,65 @@ mjx-container[display="true"] + br {
 </span>
     </div>
     <div class="post-content no-indent">
-        <h3 id="风格迁移">风格迁移</h3>
-<figure>
-<img src="/img/course3_style.png" alt="风格迁移示例">
-<figcaption aria-hidden="true">风格迁移示例</figcaption>
-</figure>
-<h4 id="基本概念和方法">1. 基本概念和方法：</h4>
-<ul>
+        <h3 id="风格迁移"><a href="#风格迁移" class="headerlink" title="风格迁移"></a>风格迁移</h3><p><img src="/img/course3_style.png" alt="风格迁移示例"></p>
+<h4 id="1-基本概念和方法："><a href="#1-基本概念和方法：" class="headerlink" title="1. 基本概念和方法："></a>1. 基本概念和方法：</h4><ul>
 <li><strong>输入图像</strong>：风格迁移技术使用两张输入图像，一张是内容图像，另一张是风格图像。</li>
 <li><strong>网络选择</strong>：使用预训练的卷积神经网络（如VGG-19），并利用其深层网络结构来抽取内容和风格的特征。</li>
 <li><strong>特征提取</strong>：选择网络中不同深度的层作为内容层和风格层。通常，内容特征取自较深的网络层，而风格特征取自多个层。</li>
 </ul>
-<h4 id="核心步骤">2. 核心步骤：</h4>
-<ul>
+<h4 id="2-核心步骤："><a href="#2-核心步骤：" class="headerlink" title="2. 核心步骤："></a>2. 核心步骤：</h4><ul>
 <li><strong>初始化和迭代</strong>：风格迁移过程中，合成图像是通过迭代优化得到的，通常初始化为内容图像。</li>
-<li><strong>损失函数</strong>：整个风格迁移的核心是定义并优化一个损失函数，该函数包括内容损失、风格损失和总变差损失：
-<ul>
+<li><strong>损失函数</strong>：整个风格迁移的核心是定义并优化一个损失函数，该函数包括内容损失、风格损失和总变差损失：<ul>
 <li><strong>内容损失</strong>：确保合成图像在内容上与内容图像相似。</li>
 <li><strong>风格损失</strong>：使用格拉姆矩阵来计算合成图像与风格图像在风格上的相似度。</li>
 <li><strong>总变差损失</strong>：有助于降低图像噪声，使相邻像素之间的色彩过渡更加平滑。</li>
-</ul></li>
 </ul>
-<h4 id="训练过程">3. 训练过程：</h4>
-<ul>
+</li>
+</ul>
+<h4 id="3-训练过程："><a href="#3-训练过程：" class="headerlink" title="3. 训练过程："></a>3. 训练过程：</h4><ul>
 <li><strong>特征抽取</strong>：对合成图像、内容图像和风格图像执行前向传播，抽取必要的内容和风格特征。</li>
 <li><strong>损失计算</strong>：在每次迭代中，计算损失函数，并通过反向传播更新合成图像，以减小损失。</li>
 </ul>
-<h3 id="fcn与语义分割">FCN与语义分割</h3>
-<h4 id="fcn的基本概念和结构">FCN的基本概念和结构：</h4>
-<ol type="1">
-<li><strong>网络架构</strong>：
+<h3 id="FCN与语义分割"><a href="#FCN与语义分割" class="headerlink" title="FCN与语义分割"></a>FCN与语义分割</h3><h4 id="FCN的基本概念和结构："><a href="#FCN的基本概念和结构：" class="headerlink" title="FCN的基本概念和结构："></a>FCN的基本概念和结构：</h4><ol>
+<li><p><strong>网络架构</strong>：</p>
 <ul>
 <li><strong>全卷积</strong>：传统的卷积神经网络（CNN）包含全连接层，用于分类任务。FCN将这些全连接层转换成卷积层，使网络能够接受任意大小的输入。</li>
 <li><strong>上采样和反卷积</strong>：FCN通过使用反卷积（也称为转置卷积）层进行上采样，恢复输入图像的尺寸，使输出的空间维度与输入相同。这是为了生成与原始输入图像相同大小的分割图。</li>
-</ul></li>
-<li><strong>端到端训练</strong>：
+</ul>
+</li>
+<li><p><strong>端到端训练</strong>：</p>
 <ul>
 <li>FCN可以端到端地训练，直接从图像像素到像素级的类别标签。</li>
-</ul></li>
-<li><strong>跳跃连接</strong>：
+</ul>
+</li>
+<li><p><strong>跳跃连接</strong>：</p>
 <ul>
 <li>FCN利用深层网络中的跳跃连接结合不同层级的特征图。这允许网络在上采样过程中结合低层次（精细的细节）和高层次（语义信息）的特征。</li>
-</ul></li>
+</ul>
+</li>
 </ol>
-<h4 id="fcn的工作流程">FCN的工作流程：</h4>
-<ol type="1">
-<li><strong>特征提取</strong>：
+<h4 id="FCN的工作流程："><a href="#FCN的工作流程：" class="headerlink" title="FCN的工作流程："></a>FCN的工作流程：</h4><ol>
+<li><p><strong>特征提取</strong>：</p>
 <ul>
 <li>输入图像首先通过一系列卷积层和池化层，这些层逐步降低图像的空间尺寸，同时增加通道数，提取出图像的高级语义特征。</li>
-</ul></li>
-<li><strong>上采样和特征融合</strong>：
+</ul>
+</li>
+<li><p><strong>上采样和特征融合</strong>：</p>
 <ul>
 <li>使用转置卷积层对提取的特征图进行上采样，逐步恢复到原始输入图像的尺寸。</li>
 <li>结合不同层的特征（通过跳跃连接），以提高上采样过程中的精确度和语义清晰度。</li>
-</ul></li>
-<li><strong>分类</strong>：
+</ul>
+</li>
+<li><p><strong>分类</strong>：</p>
 <ul>
 <li>最后一层是一个卷积层，它将特征图转换为类别分数图，每个像素的深度等于类别数。每个位置的类别分数表示该像素属于每个类别的概率。</li>
-</ul></li>
-<li><strong>学习和优化</strong>：
+</ul>
+</li>
+<li><p><strong>学习和优化</strong>：</p>
 <ul>
 <li>通过最小化像素级的交叉熵损失函数来训练网络，这个损失函数衡量的是预测的类别分数图和真实的标注图之间的差异。</li>
-</ul></li>
+</ul>
+</li>
 </ol>
 
         
